@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Update Product</title>
+<div th:replace="fragments/header"></div>
+</head>
+<body>
+	<div class="container">
+		<h1>UPDATE NEW PRODUCT</h1>
+		<div th:replace="product/product_form" />
+		<button th:if="${authorizeShowButton}" class="btn btn-primary" id="btnUpdate" type="submit"
+			th:text="#{btn.update}"></button>
+		<button class="btn btn-primary" id="btnCheckProduct" type="submit"
+			th:text="#{btn.checkProduct}"></button>
+		<div th:replace="modal/modal_check_product_available" />
+	</div>
+</body>
+
+<script th:inline="javascript">
+	//<![CDATA[
+    
+	$(document).ready(function() {
+		var role = [[${authorizeShowButton}]];
+		if(!role){
+			$("#product_form :input").attr("readonly", true);
+		}
+	});
+
+	$("#btnUpdate").click(function() {
+		if (validateForm()) {
+			$.ajax({
+				url : "/products/action-product-update",
+				data : $("#product_form").serialize(),
+				type : "PUT",
+				dataType : "json",
+				success : function(response) {
+					if (response && response != "undefined") {
+						data = JSON.stringify(response);
+						console.log("response update: " + data);
+						if (response.type == 'SUCCESS') {
+							$("#messageSuccess").text(response.message);
+						} else {
+							var message = formatMessageResponse(response);
+							$("#messageFail").text(message);
+						}
+					}
+				},
+				error : function(xhr, textStatus, error) {
+					console.log(xhr.statusText);
+					console.log(textStatus);
+					console.log(error);
+				}
+			});
+		}
+	});
+
+	$("#btnCheckProduct").click(
+			function() {
+				$.ajax({
+					url : '/products/checkStockAviable',
+					type : 'POST',
+					data : {
+						productCode : $('#productCode').val()
+					},
+					dataType : "json",
+					success : function(response) {
+						if (response != null && response != "undefined") {
+							var content = "In stock, '"
+									+ $('#productName').val() + "' has "
+									+ response + " products";
+							$('#checkProAvaiModalBodyMessage').text(content);
+							$('#checkProAvaiModal').modal('show');
+						}
+					},
+					error : function(xhr, textStatus, error) {
+						console.log(xhr.statusText);
+						console.log(textStatus);
+						console.log(error);
+						var content = "The process of checking product is errored";
+						$('#checkProAvaiModalBodyMessage').text(content);
+						$('#checkProAvaiModal').modal('show');
+					}
+				});
+			});
+
+	// 	$("#btnUpdate").click(function() {
+	// 		if (validateForm()) {
+	// 			$.post("/products/product-update", $("#product_form").serialize(), function(response) {
+	// 				if (response && response != "undefined") {
+	// 					data = JSON.stringify(response);
+	// 					console.log("JSON.parse(data): " + data);
+	// 					if(response.type == 'SUCCESS'){
+	// 						$("#messageResponse").text(response.message);
+	// 					}else{
+	// 						var message = formatMessageResponse(response);
+	// 						$("#messageResponse").text(message);
+	// 					}
+	// 				}
+	// 			}).fail(function(error) {
+	// 				alert("ERROR: " + error.responseJSON)
+	// 			});
+	// 		}
+	// 	});
+	//]]>
+</script>
+</html>

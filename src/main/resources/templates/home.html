@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Product Management</title>
+
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	<div class="container">
+		<div class="starter-template">
+			<h1>Product Management</h1>
+			<span> <a th:href="@{/products}"><img id="profile-img"
+					class="icon-in-dashboard" th:src="@{/image/product.png}" title="PRODUCT"/></a> 
+				<a th:href="@{/stocks/stock-create}"><img id="profile-img"
+					class="icon-in-dashboard" th:src="@{/image/stock.png}" title="STOCK"/></a>
+			</span>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer" />
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<div th:fragment="modal_message">
+		<!-- Modal confirm -->
+		<div class="modal" data-backdrop="static" data-keyboard="false" id="modalMessage"
+			style="display: none; z-index: 1050;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div id="modalMessageContent"></div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							id="btnModalMessageOk">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="product_form">
+		<form id="product_form" action="#" readonly="true"
+			th:object="${productForm}" method="post">
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="productCode" class="col-sm-3"
+						th:text="#{product.productCodeLabel}"></label> <input
+						class="col-sm-4" id="productCode" type="text" name="productCode"
+						required="true" maxlength="8" th:field="*{productCode}" />
+					<div class="invalid-feedback" id="messageProductCode"></div>
+				</div>
+				<div class="col-sm-6">
+					<label for="productName" class="col-sm-3"
+						th:text="#{product.productNameLabel}"></label> <input
+						class="col-sm-5" id="productName" type="text"
+						th:field="*{productName}" maxlength="50" />
+					<div class="invalid-feedback" id="messageProductName"></div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="price" class="col-sm-3" th:text="#{product.priceLabel}"></label>
+					<input id="price" type="text" th:field="*{price}" class="col-sm-4" />
+					<div class="invalid-feedback" id="messagePrice"></div>
+				</div>
+				<div class="col-sm-6">
+					<label for="origin" class="col-sm-3"
+						th:text="#{product.originLabel}"></label> <input class="col-sm-5"
+						id="origin" type="text" th:field="*{origin}" maxlength="50" />
+					<div class="invalid-feedback" id="messageOrigin"></div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-9">
+					<label for="detail" class="col-sm-2"
+						th:text="#{product.detailLabel}"></label>
+					<textarea id="detail" type="text" th:field="*{detail}" rows="3"
+						class="col-sm-6" maxlength="256" />
+					<div class="invalid-feedback" id="messageDetail"></div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<input id="productId" th:hidden="true" th:field="*{productId}" />
+			</div>
+			<div class="success-feedback" id="messageSuccess"></div>
+			<div class="invalid-feedback" id="messageFail"></div>
+			<br></br>
+		</form>
+	</div>
+</body>
+</html>

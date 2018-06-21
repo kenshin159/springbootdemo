@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create New Product</title>
+<div th:replace="fragments/header" />
+</head>
+<body>
+	<div class="container">
+		<h1>CREATE NEW PRODUCT</h1>
+		<div th:replace="product/product_form" />
+		<div class="col-sm-6">
+			<button class="btn btn-primary" data-toggle="collapse" id="btnCreate"
+				type="submit" th:text="#{btn.create}"></button>
+		</div>
+		
+	</div>
+</body>
+
+<script type="text/javascript">
+	//<![CDATA[
+	$(document).ready(function() {
+	});
+
+	//create click
+	$("#btnCreate").click(function() {
+		if(validateForm()){
+			$.ajax({
+				type : 'POST',
+				url : '/products/action-product-create',
+				data : $("#product_form").serialize(),
+				dataType : "json",
+				success : function(response) {
+					if (response && response != "undefined") {
+						data = JSON.stringify(response);
+						console.log("response create: " + data);
+						if(response.type == 'SUCCESS'){
+							$("#messageSuccess").text(response.message);
+						}else{
+							var message = formatMessageResponse(response);
+							$("#messageFail").text(message);
+						}
+					}
+				},
+				error : function(xhr, textStatus, error) {
+					console.log(xhr.statusText);
+					console.log(textStatus);
+					console.log(error);
+				}
+			});
+		}
+	});
+	
+	//]]>
+</script>
+</html>

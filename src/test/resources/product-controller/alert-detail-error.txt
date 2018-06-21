@@ -1,0 +1,12 @@
+[
+  {
+    "alertDetailCode": "product.code.null",
+    "alertDetailMessage": "Product Code is empty",
+    "alertDetailType": "ERRORS"
+  },
+  {
+    "alertDetailCode": "product.name.null",
+    "alertDetailMessage": "Product Name is empty",
+    "alertDetailType": "ERRORS"
+  }
+]

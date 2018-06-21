@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Warehousing</title>
+<div th:replace="fragments/header" />
+</head>
+<body>
+	<div class="container">
+		<h1>WAREHOUSING</h1>
+		<form id="product_form" action="#" readonly="true"
+			th:object="${productForm}" method="post">
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="productCode" class="col-sm-3"
+						th:text="#{product.productCodeLabel}"></label> <input class="col-sm-4" 
+						id="productCode" type="text" name="productCode" required="true" disabled="disabled"
+						maxlength="8" th:field="*{productCode}" />
+					<div class="invalid-feedback" id="messageProductCode"></div>
+				</div>
+				<div class="col-sm-6">
+					<label for="productName" class="col-sm-3"
+						th:text="#{product.productNameLabel}"></label> <input class="col-sm-5"
+						id="productName" disabled="disabled" type="text" th:field="*{productName}" maxlength="50"/>
+					<div class="invalid-feedback" id="messageProductName"></div>	
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="price" class="col-sm-3" th:text="#{product.priceLabel}"></label>
+					<input id="price" type="text" disabled="disabled" th:field="*{price}" class="col-sm-4"/>
+					<div class="invalid-feedback" id="messagePrice"></div>	
+				</div>
+				<div class="col-sm-6">
+					<label for="origin" class="col-sm-3"
+						th:text="#{product.originLabel}"></label> <input class="col-sm-5"  id="origin" disabled="disabled"
+						type="text" th:field="*{origin}" maxlength="50"/>
+					<div class="invalid-feedback" id="messageOrigin"></div>	
+				</div>
+			</div>
+				<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="stock" class="col-sm-3"
+										th:text="#{product.stock}"></label>
+					<select th:field="*{stockId}" id="stockId" class="col-sm-4">
+						<option th:each="stock : ${stocks}" th:value="${stock.stockId}"
+							th:text="${stock.stockCode}">Wireframe</option>
+					</select>
+					<div class="invalid-feedback" id="messageStock"></div>	
+				</div>
+				<div class="col-sm-6">
+					<label for="origin" class="col-sm-3"
+						th:text="#{product.number}"></label> <input class="col-sm-5"  id="number" 
+						type="text" th:field="*{number}"/>
+					<div class="invalid-feedback" id="messageNumber"></div>	
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<div class="col-sm-9">
+					<label for="detail" class="col-sm-2"
+						th:text="#{product.detailLabel}"></label> 
+					<textarea id="detail" type="text" th:field="*{detail}" rows="3" disabled="disabled"
+						 class="col-sm-6" maxlength="256"/>
+					<div class="invalid-feedback" id="messageDetail"></div>	
+				</div>
+			</div>
+			<div class="form-group row">
+				<input id="productId"  th:hidden="true" th:field="*{productId}" />
+			</div>
+			<div class="success-feedback" id="messageSuccess"></div>
+			<div class="invalid-feedback" id="messageFail"></div>
+			<br></br>
+		</form>
+		<div class="success-feedback" id="messageSuccess"></div>
+		<div class="invalid-feedback" id="messageFail"></div>
+		<div class="col-sm-6">
+			<button class="btn btn-primary" data-toggle="collapse" id="btnWarehouse"
+				type="submit" th:text="#{btn.warehouse}"></button>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	//<![CDATA[
+	$(document).ready(function() {
+	});
+
+	//create click
+	$("#btnWarehouse").click(function() {
+		if(validate()){
+			$.ajax({
+				type : 'POST',
+				url : '/products/' + $('#productId').val() + '/action-warehousing',
+				data : {"productId": $('#productId').val(),
+						"number": $('#number').val(),
+						"stockId": $('#stockId').val()
+						},
+				dataType : "json",
+				success : function(response) {
+					if (response && response != "undefined") {
+						data = JSON.stringify(response);
+						console.log("response warehouse: " + data);
+						if(response.type == 'SUCCESS'){
+							$("#messageSuccess").text(response.message);
+						}else{
+							var message = formatMessageResponse(response);
+							$("#messageFail").text(message);
+						}
+					}
+				},
+				error : function(xhr, textStatus, error) {
+					console.log(xhr.statusText);
+					console.log(textStatus);
+					console.log(error);
+				}
+			});
+		}
+	});
+	
+
+	function validate() {
+		var number = $('#number').val();
+		var stockId = $('#stockId').val();
+		$("#messageNumber").text("");
+		$("#messageStock").text("");
+		console.log(stockId);
+		if (stockId == null || stockId == "") {
+			$("#messageStock").text("Please enter stock");
+			$('#stockId').focus();
+			return false;
+		}
+		if (number == null || number == "") {
+			$("#messageNumber").text("Please enter number");
+			$('#number').focus();
+			return false;
+		} else {
+			var regex = new RegExp("^[0-9]+$");
+			if (!regex.test(number)) {
+				$("#messageNumber").text("Please enter integer");
+				$('#number').focus();
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	//]]>
+</script>
+</html>

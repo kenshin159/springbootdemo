@@ -1,0 +1,58 @@
+h1 {
+	color: #0000FF;
+}
+
+h2 {
+	color: #FF0000;
+}
+
+footer {
+	margin-top: 60px;
+}
+
+.container-product {
+	margin: 0px 100px;
+}
+
+.center {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+li span {
+	color: #fff;
+	/* vertical-align: middle; */
+	/* display: block; */
+	line-height: 50px;
+	font-size: 15px
+}
+
+h5.modal-title {
+	font-size: 15px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	transform: translate(-50%, -50%);
+}
+
+.invalid-feedback {
+	margin-left: 10px;
+	text-size: 14px;
+	color: red
+}
+.success-feedback{
+	margin-left: 10px;
+	text-size: 14px;
+	color: green;
+}
+
+.icon-in-dashboard {
+   margin: 20px 60px 20px 60px
+}

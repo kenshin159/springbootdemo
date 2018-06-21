@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create New Stock</title>
+<div th:replace="fragments/header" />
+</head>
+<body>
+	<div class="container">
+		<h1>CREATE NEW STOCK</h1>
+
+		<form action="#" th:action="@{/stocks/stock-create}"
+			th:object="${stockForm}" method="post">
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<label for="stockCode" class="col-sm-3">Stock Code:</label>
+					<div>
+						<input id="stockCode" type="text" th:field="*{stockCode}"
+							class="col-sm-5" placeholder="1 and 8 characters" />
+					</div>
+					<div th:if="${#fields.hasErrors('stockCode')}"
+						th:errors="*{stockCode}">Name Error</div>
+				</div>
+				<div class="col-sm-6">
+					<label for="stockName" class="col-sm-3">Stock Name:</label>
+					<div>
+						<input id="stockName" type="text" th:field="*{stockName}"
+							class="col-sm-5" placeholder="Between 1 and 50 characters" />
+					</div>
+					<div th:if="${#fields.hasErrors('stockName')}"
+						th:errors="*{stockName}">Name Error</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-9">
+					<label for="address" class="col-sm-2">Address:</label>
+					<textarea id="address" type="text" th:field="*{address}" rows="3"
+						class="col-sm-6" maxlength="256" />
+					<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name
+						Error</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<input id="stockId" th:hidden="true" th:field="*{stockId}" />
+			</div>
+			<div th:text="${message}">
+				
+			</div>
+			<div>
+				<div class="col-sm-6">
+					<button class="btn btn-primary" id="btnCreate" type="submit"
+						th:text="#{btn.create}"></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	//<![CDATA[
+
+	//]]>
+</script>
+</html>
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Security Example</title>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+	<div class="container">
+		<div class="wrapper">
+			<div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+				<form th:action="@{/login}" method="post" class="form-signin">
+					<img id="profile-img" class="profile-img-card" th:src="@{/image/icon.jpg}" />
+					<fieldset>
+						<h3>Welcome Back! Please Sign In</h3>
+						<br></br>
+						<div th:if="${param.error}">
+							<div class="alert alert-danger" th:text="${error}">Invalid username and
+								password.</div>
+						</div>
+						<div th:if="${param.logout}">
+							<div class="alert alert-info" th:text="${msg}">You have been logged out.</div>
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="username" id="username"
+								class="form-control input-lg" placeholder="UserName"
+								required="true" autofocus="true" />
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" id="password"
+								class="form-control input-lg" placeholder="Password"
+								required="true" />
+						</div>
+
+						<div class="form-group">
+								<input type="submit" class="btn btn-lg btn-success btn-block"
+									value="Login" />
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer" />
+</body>
+<script th:inline="javascript">
+		var a = [[${param}]];
+		var b = [[${abc}]];
+		console.log('a: ', a);
+		console.log('abc: ',b);
+	
+</script>
+</html>
